@@ -39,7 +39,7 @@ public class HaziHinamScraperIT {
 
     @DynamicPropertySource
     static void configureProperties (DynamicPropertyRegistry registry) {
-        registry.add("store.storeDataMap.HaziHinam.targetBaseUrl", wireMockServer::baseUrl);
+        registry.add("store.storeDataMap.HaziHinam.storeApiUrl", wireMockServer::baseUrl);
     }
 
     protected void addInitStub() {
