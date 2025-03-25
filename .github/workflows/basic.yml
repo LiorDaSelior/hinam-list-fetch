@@ -1,0 +1,43 @@
+name: Basic Workflow
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+  
+jobs:
+  setup:
+    name: "Run"
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Create Summary dir
+      run: mkdir "${{ github.workspace }}/results"
+    
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '23'
+        distribution: 'corretto'
+        cache: maven
+
+    - name: Verify with Maven
+      run: mvn clean verify
+
+    - name: Create test summary
+      uses: test-summary/action@v2.4
+      with:
+        paths: target/surefire-reports/*.xml
+        output: ${{ github.workspace }}/results/summary.md
+      if: always()
+
+    - name: Put test summary in job summary
+      run: |
+        echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+      if: always()
