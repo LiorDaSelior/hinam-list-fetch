@@ -20,9 +20,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 @SpringBootTest
-@TestPropertySource("classpath:json-scraper-test.properties")
+//@TestPropertySource("classpath:json-scraper-test.properties")
 public class HaziHinamScraperIT {
     @Autowired
     protected HaziHinamScraper scraper;
@@ -39,7 +39,7 @@ public class HaziHinamScraperIT {
 
     @DynamicPropertySource
     static void configureProperties (DynamicPropertyRegistry registry) {
-        registry.add("store.storeDataMap.HaziHinam.storeApiUrl", wireMockServer::baseUrl);
+        registry.add("store.storeNameDataMap.HaziHinam.storeApiUrl", wireMockServer::baseUrl);
     }
 
     protected void addInitStub() {
