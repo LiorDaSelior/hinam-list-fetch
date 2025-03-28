@@ -12,7 +12,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,29 +29,19 @@ public class HaziHinamScraperTest {
 
     @InjectMocks
     HaziHinamScraper scraper;
+    protected final String jsonResponseString;
 
-    String jsonResponseString = """
-                                        {
-                                            "Results" : {
-                                                 "Categories": [
-                                                    {
-                                                        "Id" : 1000,
-                                                        "SubCategories": [
-                                                        {"Id" : 0},
-                                                        {"Id" : 1}
-                                                        ]
-                                                    },
-                                                    {
-                                                        "Id" : 1001,
-                                                        "SubCategories": [
-                                                        {"Id" : 2},
-                                                        {"Id" : 3}
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                """;
+
+    public HaziHinamScraperTest() {
+        Resource storeApiResponseFile = new DefaultResourceLoader().getResource("StoreAPIExample-HaziHinam.json");
+        try {
+            jsonResponseString =  new String(
+                    storeApiResponseFile.getInputStream().readAllBytes(),
+                    StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Test
     @Order(1)

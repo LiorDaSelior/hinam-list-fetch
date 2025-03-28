@@ -1,0 +1,20 @@
+{
+  "Results" : {
+    "Categories": [
+      {
+        "Id" : 1000,
+        "SubCategories": [
+          {"Id" : 0},
+          {"Id" : 1}
+        ]
+      },
+      {
+        "Id" : 1001,
+        "SubCategories": [
+          {"Id" : 2},
+          {"Id" : 3}
+        ]
+      }
+    ]
+  }
+}
